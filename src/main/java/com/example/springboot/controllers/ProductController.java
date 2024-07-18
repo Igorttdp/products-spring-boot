@@ -4,6 +4,7 @@ import com.example.springboot.dtos.ProductRecordDto;
 import com.example.springboot.dtos.ProductRecordUpdateDto;
 import com.example.springboot.models.ProductModel;
 import com.example.springboot.services.ProductService;
+import com.example.springboot.util.ApiError;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,7 +38,7 @@ public class ProductController {
         var result = productService.getOneProduct(id);
 
         if (result == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiError(HttpStatus.NOT_FOUND, "Product not found."));
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(result);
@@ -49,7 +50,7 @@ public class ProductController {
         var result = productService.updateProduct(id, ProductRecordUpdateDto);
 
         if (result == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiError(HttpStatus.NOT_FOUND, "Product not found."));
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(result);
@@ -60,7 +61,7 @@ public class ProductController {
         var result = productService.deleteProduct(id);
 
         if (!result) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiError(HttpStatus.NOT_FOUND, "Product not found."));
         }
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
