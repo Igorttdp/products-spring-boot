@@ -7,7 +7,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -27,7 +28,7 @@ public class UserModel implements UserDetails, Serializable {
     @JoinTable(name = "TB_USERS_ROLES",
     joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<RoleModel> roles;
+    private Set<RoleModel> roles = new HashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -78,5 +79,17 @@ public class UserModel implements UserDetails, Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<RoleModel> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<RoleModel> roles) {
+        this.roles = roles;
+    }
+
+    public void assignRole(RoleModel roleModel) {
+        roles.add(roleModel);
     }
 }

@@ -4,12 +4,14 @@ import com.example.springboot.enums.RoleName;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
 @Table(name = "TB_ROLE")
 public class RoleModel implements GrantedAuthority, Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
